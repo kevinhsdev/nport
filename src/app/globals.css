@@ -1,0 +1,107 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme {
+  --color-ink: #0e0f1a;
+  --color-surface: #151626;
+  --color-raised: #1d1e31;
+  --color-line: #38384f;
+  --color-fg: #f8f4ff;
+  --color-muted: #bcb7ce;
+  --color-pink: #f28ac4;
+  --color-lav: #b5a1ff;
+  --color-danger: #ff9da9;
+  --color-pink-ink: #24162d;
+
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+html {
+  background: var(--color-ink);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Browser surfaces carry the palette too */
+::selection {
+  background: var(--color-pink);
+  color: var(--color-pink-ink);
+}
+:focus-visible {
+  outline: 2px solid var(--color-pink);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+input,
+select {
+  caret-color: var(--color-pink);
+  accent-color: var(--color-pink);
+}
+* {
+  scrollbar-color: var(--color-line) transparent;
+}
+a {
+  text-underline-offset: 0.22em;
+}
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+.display {
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+.heading {
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+/* Pressable things answer on press */
+.press {
+  transition: transform 160ms var(--ease-out-strong), background-color 200ms ease,
+    border-color 200ms ease, color 200ms ease;
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/* One orchestrated entrance for the hero; visible without JS */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+}
+.rise {
+  animation: rise 900ms var(--ease-out-strong) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 80ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes rise {
+    from {
+      opacity: 0;
+    }
+  }
+  .press:active {
+    transform: none;
+  }
+}
